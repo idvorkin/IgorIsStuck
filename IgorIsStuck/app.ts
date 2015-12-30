@@ -8,7 +8,7 @@ interface String
 }
 
 String.prototype.SplitAndClean = (splitchar)=> {
-    // I have no idea why this doesn't work maybe a JS guru can explain why "this" is getting set to a window.
+    // I have no idea why this doesn't work maybe a JS guru can explain why "this" is getting set to a w
     return SplitAndClean(this.toString(), splitchar);
 }
 function SplitAndClean(str, splitchar){
@@ -74,10 +74,10 @@ class BusinessLogic {
         $(this.headerDiv).append($("<hr/>"));
         */
 
-        var buttonRow = $("<div>").addClass("btn-group btn-group-justified");
+        var buttonRow = $("<div>").addClass("btn-group btn-group-lg btn-group-justified");
         this.headerDiv.append(buttonRow);
         for (var choice in this.choices) {
-            var button = $("<a/>").text(choice).addClass("btn btn-default");
+            var button = $("<a/>").text(choice).addClass("btn btn-default btn-large");
             button.click(this.choiceOnClickedFactory(choice));
             $(buttonRow).append(button);
         }
