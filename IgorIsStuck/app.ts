@@ -1,40 +1,94 @@
 ﻿/// <reference path="scripts/typings/underscore/underscore.d.ts" />
 /// <reference path="scripts/typings/jquery/jquery.d.ts" />
+
+"use strict";
+interface String
+{
+    SplitAndClean(split:string):String[];
+}
+
+String.prototype.SplitAndClean = (splitchar)=> {
+    // I have no idea why this doesn't work maybe a JS guru can explain why "this" is getting set to a window.
+    return SplitAndClean(this.toString(), splitchar);
+}
+function SplitAndClean(str, splitchar){
+    var split =  str.split(splitchar);
+    var filtered = split.filter((v, i) => v ? true : false);
+    var trimmed = filtered.map((s, i) => s.trim());
+    return trimmed;
+}
+
 class BusinessLogic {
     body: HTMLElement;
     timerToken: number;
     choices = {
-        "Habit":
-            "Magic Trick; Juggle; Formal Meditate; Gap Meditate".split(";"),
-        "Physical Activity":
-            "Push Up;Bike Ride; Run".split(";"),
-        "Consume":
-            "Ted Talk; Talk From Nozbe;Read SCIFI; Watch Movie".split(";"),
-        "Produce":
-            "Blog Post;".split(";"),
-        "Kids Activity":
-            "Skating;Swimming;Library;Bus;Airport".split(";"),
+        "Habit": SplitAndClean(
+            "Magic Trick; Juggle; Formal Meditate; Gap Meditate",";"),
+        "Physical Activity": SplitAndClean(
+            "Push Up;Bike Ride; Run",";"),
+        "Consume": SplitAndClean(
+            "Ted Talk; Talk From Nozbe;Read SCIFI; Watch Movie",";"),
+        "Produce": SplitAndClean(
+            "Blog Post ; ",";"),
+        "Kids Activity": SplitAndClean(
+            "Skating;Swimming;Library;Bus;Airport",';'),
+        "Journal Prompts ": SplitAndClean(`
+	What is my thought on rituals? 
+	What is my thought on making things sacred? 
+	What do I want to teach zach? 
+	What does being a successful father mean to me? 
+	What do I enjoy doing? 
+	Why do I procrastinate? 
+	What would Tori find most helpful? 
+	When was I acting empathically
+	What would 16 year old Igor say if he popped into time
+	What would future Igor say if he popped into time.
+	What are the wins, big and small, that I can celebrate?
+	What was I doing when I was achieving my best results?
+	What mistakes did I make over and over again?
+	What are the experiences and achievements I would love to look back on this time next year?
+    What is my ONE most important thing for 2016? (*This is what you will focus most of your efforts on in 2016)
+        `,"\n")
     }
 
     constructor(body: any) {
         this.body = body;
+        this.headerDiv = $("<div/>");
+        this.contentDiv = $("<div/>");
+        $(this.body).append(this.headerDiv);
+        $(this.body).append(this.contentDiv);
     }
 
 
+    clearText() {
+        this.contentDiv.empty();
+        console.log("Done");
+    }
 
     createButtons() {
+        $(this.headerDiv).append($("<hr/>"));
+        /*
+        var resetButton = $("<button/>").text("Reset").addClass("btn btn-danger").css("width","100%");
+        resetButton.click(()=>this.clearText());
+        $(this.headerDiv).append(resetButton);
+        $(this.headerDiv).append($("<hr/>"));
+        */
+
+        var buttonRow = $("<div>").addClass("btn-group btn-group-justified");
+        this.headerDiv.append(buttonRow);
         for (var choice in this.choices) {
-            var button = $("<button/>").text(choice).addClass("btn btn-default");
+            var button = $("<a/>").text(choice).addClass("btn btn-default");
             button.click(this.choiceOnClickedFactory(choice));
-            $(this.body).append(button);
+            $(buttonRow).append(button);
         }
 
     }
 
     choiceOnClickedFactory(choice:string) {
             return () => {
-                var div = $("<h2/>").text(BusinessLogic.randomElement(this.choices[choice]));
-                $(this.body).append(div);
+                this.clearText();
+                var div = $("<h2/>").text(BusinessLogic.randomElement(this.choices[choice])).addClass("text-center");
+                $(this.contentDiv).append(div);
             };
     }
     static randomElement(items:[any])
@@ -42,6 +96,12 @@ class BusinessLogic {
         return items[Math.floor(Math.random()*items.length)];
     }
 
+    headerDiv: JQuery;
+    contentDiv: JQuery;
+
+    createHeader() {
+         throw new Error("Not implemented");
+    }
 }
 
 window.onload = () => {
