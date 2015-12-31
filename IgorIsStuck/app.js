@@ -3,7 +3,6 @@
 "use strict";
 var _this = this;
 String.prototype.SplitAndClean = function (splitchar) {
-    // I have no idea why this doesn't work maybe a JS guru can explain why "this" is getting set to a w
     return SplitAndClean(_this.toString(), splitchar);
 };
 function SplitAndClean(str, splitchar) {
@@ -36,7 +35,7 @@ var BusinessLogic = (function () {
         var buttonRow = $("<div id='responsive'>").addClass("btn-group").css("width", "100%");
         this.headerDiv.append(buttonRow);
         for (var choice in this.choices) {
-            var button = $("<a/>").text(choice).addClass("btn btn-default btn-large btn-block");
+            var button = $("<a/>").text(choice).addClass("btn btn-default btn-block");
             button.click(this.choiceOnClickedFactory(choice));
             $(buttonRow).append(button);
         }
@@ -45,7 +44,7 @@ var BusinessLogic = (function () {
         var _this = this;
         return function () {
             _this.clearText();
-            var div = $("<h2/>").text(BusinessLogic.randomElement(_this.choices[choice])).addClass("text-center");
+            var div = $("<h4/>").text(BusinessLogic.randomElement(_this.choices[choice])).addClass("text-center");
             $(_this.contentDiv).append(div);
         };
     };
@@ -58,8 +57,6 @@ var BusinessLogic = (function () {
     return BusinessLogic;
 })();
 window.onload = function () {
-    // Create button per category on Key, on Click show activity for said button.
     var bl = new BusinessLogic($("body"));
     bl.createButtons();
 };
-//# sourceMappingURL=app.js.map

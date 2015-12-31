@@ -69,7 +69,7 @@ class BusinessLogic {
         var buttonRow = $("<div id='responsive'>").addClass("btn-group").css("width","100%");
         this.headerDiv.append(buttonRow);
         for (var choice in this.choices) {
-            var button = $("<a/>").text(choice).addClass("btn btn-default btn-large btn-block");
+            var button = $("<a/>").text(choice).addClass("btn btn-default btn-block");
             button.click(this.choiceOnClickedFactory(choice));
             $(buttonRow).append(button);
         }
@@ -79,7 +79,7 @@ class BusinessLogic {
     choiceOnClickedFactory(choice:string) {
             return () => {
                 this.clearText();
-                var div = $("<h2/>").text(BusinessLogic.randomElement(this.choices[choice])).addClass("text-center");
+                var div = $("<h4/>").text(BusinessLogic.randomElement(this.choices[choice])).addClass("text-center");
                 $(this.contentDiv).append(div);
             };
     }
