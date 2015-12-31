@@ -29,9 +29,9 @@ class BusinessLogic {
         "Consume": SplitAndClean(
             "Ted Talk; Talk From Nozbe;Read SCIFI; Watch Movie",";"),
         "Produce": SplitAndClean(
-            "Blog Post ; ",";"),
+            "Blog Post;",";"),
         "Kids Activity": SplitAndClean(
-            "Skating;Swimming;Library;Bus;Airport",';'),
+            "Skating;Swimming;Library;Bus;Airport",";"),
         "Journal Prompts ": SplitAndClean(`
 	What is my thought on rituals? 
 	What is my thought on making things sacred? 
@@ -66,18 +66,10 @@ class BusinessLogic {
     }
 
     createButtons() {
-        $(this.headerDiv).append($("<hr/>"));
-        /*
-        var resetButton = $("<button/>").text("Reset").addClass("btn btn-danger").css("width","100%");
-        resetButton.click(()=>this.clearText());
-        $(this.headerDiv).append(resetButton);
-        $(this.headerDiv).append($("<hr/>"));
-        */
-
-        var buttonRow = $("<div>").addClass("btn-group btn-group-lg btn-group-justified");
+        var buttonRow = $("<div id='responsive'>").addClass("btn-group").css("width","100%");
         this.headerDiv.append(buttonRow);
         for (var choice in this.choices) {
-            var button = $("<a/>").text(choice).addClass("btn btn-default btn-large");
+            var button = $("<a/>").text(choice).addClass("btn btn-default btn-large btn-block");
             button.click(this.choiceOnClickedFactory(choice));
             $(buttonRow).append(button);
         }
@@ -103,6 +95,7 @@ class BusinessLogic {
          throw new Error("Not implemented");
     }
 }
+
 
 window.onload = () => {
     // Create button per category on Key, on Click show activity for said button.
