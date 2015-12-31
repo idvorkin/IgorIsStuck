@@ -23,15 +23,15 @@ class BusinessLogic {
     timerToken: number;
     choices = {
         "Habit": SplitAndClean(
-            "Magic Trick; Juggle; Formal Meditate; Gap Meditate",";"),
+            "Magic Trick; Juggle; Formal Meditate; Gap Meditate; Journal",";"),
         "Physical Activity": SplitAndClean(
             "Push Up;Bike Ride; Run",";"),
         "Consume": SplitAndClean(
             "Ted Talk; Talk From Nozbe;Read SCIFI; Watch Movie",";"),
         "Produce": SplitAndClean(
-            "Blog Post;",";"),
+            "Blog Post;Throw something away",";"),
         "Kids Activity": SplitAndClean(
-            "Skating;Swimming;Library;Bus;Airport",";"),
+            "Walk to park;Drawing;Skating;Swimming;Library;Bus;Airport",";"),
         "Journal Prompts ": SplitAndClean(`
 	What is my thought on rituals? 
 	What is my thought on making things sacred? 
@@ -81,6 +81,10 @@ class BusinessLogic {
                 this.clearText();
                 var div = $("<h4/>").text(BusinessLogic.randomElement(this.choices[choice])).addClass("text-center");
                 $(this.contentDiv).append(div);
+
+                // If we got content going longer, use this to scroll us to the bottom of the page
+                // But don't do it if you don't have to, because it causes a jag.
+                // $("html, body").animate({ scrollTop: $(document).height()  }, "slow");
             };
     }
     static randomElement(items:[any])
